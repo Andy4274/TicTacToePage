@@ -46,12 +46,15 @@ function getCells(x){
 
 function startGame(){
 	clearBoard();
+	turnCount = 0;
 	$("#Board").show();
 	$("#winner").text("").hide()
 	$("#currPlayer").html($("#X").val());
 	$("#turn").show();
 	$("#count").text(turnCount);
 	$("#turnLabel").show();
+	$("#start").hide();
+	if (debug){ printCells();}
 };
 
 function getPlayerName(){
@@ -87,6 +90,11 @@ function doMove(cell){
 			if (debug){console.log("game won by player "+ player);}
 			doWin(getPlayerName());
 			return "game over";
+		} else {
+			if (turnCount > 8) {
+				//do Draw
+				doDraw();
+			}
 		}
 		changePlayer();
 		return true;
@@ -266,6 +274,9 @@ function doWin(pname){
 	for (var i=0;i<9;i++){
 		$(id+i).attr("disabled","true");
 	}
+	//hide the turn notice, show the start button
+	$("#turn").hide();
+	$("#start").show();
 }
 function clearBoard(){
 	cells=[0,0,0,0,0,0,0,0,0];
@@ -274,4 +285,16 @@ function clearBoard(){
 	for (var i=0;i<9;i++){
 		$(id+i).html("&nbsp;B&nbsp;").addClass("board").removeClass("played");
 	}
+}
+
+function doDraw(){
+	$("#winner").html('<h3 class="centered">It\'s a draw!</h3>').show();
+	//disable the board
+	var id="#cell";
+	for (var i=0;i<9;i++){
+		$(id+i).attr("disabled","true");
+	}
+	//hide the turn notice, show the start button
+	$("#turn").hide();
+	$("#start").show();
 }
