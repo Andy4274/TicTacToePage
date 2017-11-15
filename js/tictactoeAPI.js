@@ -391,7 +391,7 @@ function computerSelectMove() {
 				}
 			}
 		}
-	}
+	} 
 	//we have counted all the X's and O's.  now check the totals
 	//check rows and cols and diag for win
 	for (var i=0;i<3;i++){
